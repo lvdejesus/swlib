@@ -18,6 +18,7 @@ void deque_unshift(Deque *deque, void *value);
 void *deque_pop(Deque *deque);
 void *deque_shift(Deque *deque);
 void *deque_peek(Deque *deque);
+void *deque_peek_last(Deque *deque);
 void deque_free(Deque *deque);
 
 #endif
