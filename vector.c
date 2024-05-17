@@ -35,7 +35,6 @@ void *vector_push(Vector *vector, void *value) {
 
 void *vector_get(Vector *vector, size_t index) {
   if (index >= vector->size) {
-    printf("Out of bounds\n");
     return NULL;
   }
 
@@ -44,7 +43,6 @@ void *vector_get(Vector *vector, size_t index) {
 
 void *vector_pop(Vector *vector) {
   if (vector->size == 0) {
-    printf("Attempted pop on an empty vector");
     return NULL;
   }
 
