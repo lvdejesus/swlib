@@ -56,7 +56,12 @@ void *vector_pop(Vector *vector) {
   return value;
 }
 
-void vector_free(Vector *vector) {
+void vector_free(Vector *vector, void (*destructor)(void *)) {
+  if (destructor != NULL) {
+    for (int i = 0; i < vector->size; i++) {
+      destructor(vector->data + i * vector->data_size);
+    }
+  }
+
   free(vector->data);
-  free(vector);
 }

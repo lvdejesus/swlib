@@ -1,5 +1,6 @@
 #include <stdbool.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 #include "vector.h"
@@ -71,5 +72,6 @@ int main() {
 
   printf("=== %u out of %u test(s) failed ===\n", failed, n);
 
-  vector_free(vector);
+  vector_free(vector, NULL);
+  free(vector);
 }

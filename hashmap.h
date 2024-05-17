@@ -21,6 +21,6 @@ HashMap *hash_map_new(size_t num_buckets,
 void hash_map_add(HashMap *hash_map, char *key, void *value);
 void *hash_map_get(HashMap *hash_map, char *key);
 void hash_map_remove(HashMap *hash_map, char *key);
-void hash_map_free(HashMap *hash_map);
+void hash_map_free(HashMap *hash_map, void (*destructor)(void *));
 
 #endif
