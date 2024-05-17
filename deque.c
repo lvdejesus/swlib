@@ -4,10 +4,14 @@
 
 Deque *deque_new() {
   Deque *deque = malloc(sizeof(Deque));
-  deque->head = NULL;
-  deque->tail = NULL;
+  deque_init(deque);
 
   return deque;
+}
+
+void deque_init(Deque *deque) {
+  deque->head = NULL;
+  deque->tail = NULL;
 }
 
 void deque_push(Deque *deque, void *value) {

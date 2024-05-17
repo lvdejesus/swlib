@@ -4,10 +4,12 @@
 
 List *list_new() {
   List *list = malloc(sizeof(List));
-  list->head = NULL;
+  list_init(list);
 
   return list;
 }
+
+void list_init(List *list) { list->head = NULL; }
 
 void list_push(List *list, void *value) {
   ListNode *node = malloc(sizeof(ListNode));

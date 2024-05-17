@@ -11,6 +11,7 @@ typedef struct List {
 } List;
 
 List *list_new();
+void list_init(List *list);
 void list_push(List *list, void *value);
 void *list_pop(List *list);
 void *list_peek(List *list);

@@ -9,6 +9,13 @@
 HashMap *hash_map_new(size_t num_buckets,
                       unsigned int (*hash_function)(char *)) {
   HashMap *hash_map = malloc(sizeof(HashMap));
+  hash_map_init(hash_map, num_buckets, hash_function);
+
+  return hash_map;
+}
+
+void hash_map_init(HashMap *hash_map, size_t num_buckets,
+                   unsigned int (*hash_function)(char *)) {
   hash_map->hash_function = hash_function;
   hash_map->num_buckets = num_buckets;
 
@@ -20,8 +27,6 @@ HashMap *hash_map_new(size_t num_buckets,
 
     list_free(list);
   }
-
-  return hash_map;
 }
 
 HashMapNode *hash_map_node_new(char *key, void *value) {

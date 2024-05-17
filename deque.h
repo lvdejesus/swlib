@@ -13,6 +13,7 @@ typedef struct Deque {
 } Deque;
 
 Deque *deque_new();
+void deque_init(Deque *deque);
 void deque_push(Deque *deque, void *value);
 void deque_unshift(Deque *deque, void *value);
 void *deque_pop(Deque *deque);
