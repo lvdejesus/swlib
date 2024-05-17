@@ -72,12 +72,11 @@ void hash_map_remove(HashMap *hash_map, char *key) {
   }
 
   ListNode *list_node_parent = NULL;
-  void *result = NULL;
+  HashMapNode *node = NULL;
 
   do {
-    HashMapNode *node = list_node->value;
+    node = list_node->value;
     if (strcmp(node->key, key) == 0) {
-      result = node->value;
       break;
     }
 
