@@ -34,4 +34,10 @@ void *list_pop(List *list) {
 
 void *list_peek(List *list) { return list->head; }
 
-void list_free(List *list) { free(list); }
+void list_free(List *list, void (*destructor)(void *)) {
+  if (destructor != NULL) {
+    for (ListNode *curr = list->head; list->head != NULL; curr = curr->next) {
+      destructor(curr->value);
+    }
+  }
+}

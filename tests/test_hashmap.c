@@ -1,5 +1,6 @@
 #include <stdbool.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 #include "hashmap.h"
@@ -65,5 +66,6 @@ int main() {
 
   printf("=== %u out of %u test(s) failed ===\n", failed, n);
 
-  hash_map_free(hash_map);
+  hash_map_free(hash_map, NULL);
+  free(hash_map);
 }

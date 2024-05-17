@@ -1,5 +1,6 @@
 #include <stdbool.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 #include "list.h"
@@ -64,5 +65,6 @@ int main() {
 
   printf("=== %u out of %u test(s) failed ===\n", failed, n);
 
-  list_free(list);
+  list_free(list, NULL);
+  free(list);
 }

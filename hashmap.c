@@ -25,7 +25,8 @@ void hash_map_init(HashMap *hash_map, size_t num_buckets,
     List *list = list_new();
     vector_push(&hash_map->buckets, list);
 
-    list_free(list);
+    list_free(list, NULL);
+    free(list);
   }
 }
 
@@ -100,7 +101,13 @@ void hash_map_remove(HashMap *hash_map, char *key) {
   }
 }
 
-void hash_map_free(HashMap *hash_map) {
+void hash_map_free(HashMap *hash_map, void (*destructor)(void *)) {
+  if (destructor != NULL) {
+    for (size_t i = 0; i < hash_map->num_buckets; i++) {
+      List *bucket = vector_get(&hash_map->buckets, i);
+      list_free(bucket, destructor);
+    }
+  }
+
   free(hash_map->buckets.data);
-  free(hash_map);
 }

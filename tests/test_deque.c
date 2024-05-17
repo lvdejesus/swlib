@@ -1,5 +1,6 @@
 #include <stdbool.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 #include "deque.h"
@@ -64,5 +65,5 @@ int main() {
 
   printf("=== %u out of %u test(s) failed ===\n", failed, n);
 
-  deque_free(deque);
+  deque_free(deque, NULL);
 }

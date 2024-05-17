@@ -20,6 +20,6 @@ void *deque_pop(Deque *deque);
 void *deque_shift(Deque *deque);
 void *deque_peek(Deque *deque);
 void *deque_peek_last(Deque *deque);
-void deque_free(Deque *deque);
+void deque_free(Deque *deque, void (*destructor)(void *));
 
 #endif
