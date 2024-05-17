@@ -36,8 +36,18 @@ void *list_peek(List *list) { return list->head; }
 
 void list_free(List *list, void (*destructor)(void *)) {
   if (destructor != NULL) {
-    for (ListNode *curr = list->head; list->head != NULL; curr = curr->next) {
+    ListNode *curr = list->head;
+
+    if (curr == NULL) {
+      return;
+    }
+
+    while (curr != NULL) {
       destructor(curr->value);
+
+      ListNode *temp = curr->next;
+      free(curr);
+      curr = temp;
     }
   }
 }

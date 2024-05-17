@@ -94,9 +94,18 @@ void *deque_peek(Deque *deque) {
 
 void deque_free(Deque *deque, void (*destructor)(void *)) {
   if (destructor != NULL) {
-    for (DequeNode *curr = deque->head; deque->head != NULL;
-         curr = curr->back) {
+    DequeNode *curr = deque->head;
+
+    if (curr == NULL) {
+      return;
+    }
+
+    while (curr != NULL) {
       destructor(curr->value);
+
+      DequeNode *temp = curr->back;
+      free(curr);
+      curr = temp;
     }
   }
 }
