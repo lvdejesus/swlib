@@ -7,12 +7,16 @@
 Vector *vector_new(size_t initial_capacity, size_t data_size) {
   Vector *vector = malloc(sizeof(Vector));
 
+  vector_init(vector, initial_capacity, data_size);
+
+  return vector;
+}
+
+void vector_init(Vector *vector, size_t initial_capacity, size_t data_size) {
   vector->data = malloc(initial_capacity * data_size);
   vector->size = 0;
   vector->capacity = initial_capacity;
   vector->data_size = data_size;
-
-  return vector;
 }
 
 void vector_push(Vector *vector, void *value) {
