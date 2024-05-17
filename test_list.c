@@ -20,14 +20,32 @@ bool test_pop() {
   return *value == 'H';
 }
 
+bool test_pop_multiple() {
+  size_t n = strlen(string);
+  for (size_t i = 0; i < n; i++) {
+    list_push(list, &string[i]);
+  }
+
+  for (size_t i = 0; i < n; i++) {
+    char *value = list_pop(list);
+
+    if (*value != string[(n - 1) - i]) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
 int main() {
   list = list_new();
   char *test_names[] = {
       "test_push",
       "test_pop",
+      "test_pop_multiple",
   };
 
-  bool (*tests[])() = {test_push, test_pop};
+  bool (*tests[])() = {test_push, test_pop, test_pop_multiple};
 
   unsigned int n = sizeof(tests) / sizeof(*(tests));
   unsigned int failed = 0;
