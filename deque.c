@@ -72,6 +72,12 @@ void *deque_shift(Deque *deque) {
   return NULL;
 }
 
-void *deque_peek(Deque *deque) { return deque->head; }
+void *deque_peek(Deque *deque) {
+  if (deque->head) {
+    return deque->head->value;
+  }
+
+  return NULL;
+}
 
 void deque_free(Deque *deque) { free(deque); }
