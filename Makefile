@@ -5,3 +5,7 @@ test-vector: test_vector.c vector.c
 test-list: test_list.c list.c
 	gcc test_list.c list.c -Wall -fsanitize=address -o test_list.out
 	./test_list.out
+
+test-hashmap: test_hashmap.c hashmap.c vector.c list.c
+	gcc test_hashmap.c hashmap.c vector.c list.c -Wall -fsanitize=address -o test_hashmap.out
+	./test_hashmap.out	
