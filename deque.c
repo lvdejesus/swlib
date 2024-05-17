@@ -13,58 +13,38 @@ Deque *deque_new() {
 void deque_push(Deque *deque, void *value) {
   DequeNode *node = malloc(sizeof(DequeNode));
   node->value = value;
+  node->back = deque->head;
+  node->front = NULL;
 
-  // if there is a first node,
-  if (deque->head) {
-    // the node before it is the new node.
-    deque->head->prev = node;
-  } else {
-    // the only node should be head and rear
+  if (deque->head == NULL) {
     deque->tail = node;
+  } else {
+    deque->head->front = node;
   }
-
-  // first node becomes second node
-  node->next = deque->head;
-
-  // new node becomes first node,
   deque->head = node;
 }
 
 void deque_unshift(Deque *deque, void *value) {
   DequeNode *node = malloc(sizeof(DequeNode));
   node->value = value;
+  node->back = NULL;
+  node->front = deque->tail;
 
-  // if there is a last node,
-  if (deque->tail) {
-    // the node after it is the new node.
-    deque->head->next = node;
-  } else {
-    // the only node should be head and rear
+  if (deque->tail == NULL) {
     deque->head = node;
+  } else {
+    deque->tail->back = node;
   }
-
-  // last node becomes second last node
-  node->prev = deque->tail;
-
-  // new node becomes last node,
   deque->tail = node;
 }
 
 void *deque_pop(Deque *deque) {
   if (deque->head) {
     DequeNode *node = deque->head;
+    deque->head = node->back;
 
-    // second node becomes first node,
-    deque->head = node->next;
-
-    if (!deque->head) {
-      // if first node doesn't exist,
-      // then there is no last node
+    if (deque->head == NULL) {
       deque->tail = NULL;
-    } else {
-      // second node becomes first node,
-      // and will have nothing before it
-      deque->head->prev = NULL;
     }
 
     void *value = node->value;
@@ -78,18 +58,10 @@ void *deque_pop(Deque *deque) {
 void *deque_shift(Deque *deque) {
   if (deque->tail) {
     DequeNode *node = deque->tail;
+    deque->tail = node->front;
 
-    // second to last node becomes last node,
-    deque->tail = node->prev;
-
-    if (!deque->tail) {
-      // if last node doesn't exist,
-      // then there is no first node
+    if (deque->tail == NULL) {
       deque->head = NULL;
-    } else {
-      // second to last node becomes last node,
-      // and will have nothing after it
-      deque->tail->next = NULL;
     }
 
     void *value = node->value;

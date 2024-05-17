@@ -3,8 +3,8 @@
 
 typedef struct DequeNode {
   void *value;
-  struct DequeNode *next;
-  struct DequeNode *prev;
+  struct DequeNode *front;
+  struct DequeNode *back;
 } DequeNode;
 
 typedef struct Deque {
