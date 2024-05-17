@@ -9,3 +9,7 @@ test-list: tests/test_list.c list.c
 test-hashmap: tests/test_hashmap.c hashmap.c vector.c list.c
 	gcc tests/test_hashmap.c hashmap.c vector.c list.c -I. -g -Wall -fsanitize=address -o test_hashmap.out
 	./test_hashmap.out	
+
+test-deque: tests/test_deque.c deque.c
+	gcc tests/test_deque.c deque.c -I. -g -Wall -fsanitize=address -o test_deque.out
+	./test_deque.out
