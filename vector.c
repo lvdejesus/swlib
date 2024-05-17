@@ -19,15 +19,18 @@ void vector_init(Vector *vector, size_t initial_capacity, size_t data_size) {
   vector->data_size = data_size;
 }
 
-void vector_push(Vector *vector, void *value) {
+void *vector_push(Vector *vector, void *value) {
   if (vector->size == vector->capacity) {
     vector->capacity *= 2;
     vector->data = realloc(vector->data, vector->capacity * vector->data_size);
   }
 
-  memcpy(vector->data + vector->size * vector->data_size, value,
-         vector->data_size);
+  void *ptr = vector->data + vector->size * vector->data_size;
+
+  memcpy(ptr, value, vector->data_size);
   vector->size += 1;
+
+  return ptr;
 }
 
 void *vector_get(Vector *vector, size_t index) {
