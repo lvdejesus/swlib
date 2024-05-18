@@ -21,12 +21,11 @@ void hash_map_init(HashMap *hash_map, size_t num_buckets,
 
   vector_init(&hash_map->buckets, num_buckets, sizeof(List));
 
-  List *list = list_new();
   for (size_t i = 0; i < num_buckets; i++) {
-    vector_push(&hash_map->buckets, list);
+    list_init(hash_map->buckets.data + hash_map->buckets.data_size * i);
   }
-  list_free(list, NULL);
-  free(list);
+
+  hash_map->buckets.size = hash_map->buckets.capacity;
 }
 
 HashMapNode *hash_map_node_new(char *key, void *value) {

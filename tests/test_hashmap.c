@@ -35,8 +35,6 @@ bool test_remove_multiple() {
   return (!hash_map_get(hash_map, "foo") && !hash_map_get(hash_map, "bar"));
 }
 
-unsigned int hash_function(char *key) { return key[0]; }
-
 int main() {
   hash_map = hash_map_new(16, hash_function);
   char *test_names[] = {
