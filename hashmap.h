@@ -25,4 +25,6 @@ void *hash_map_get(HashMap *hash_map, char *key);
 void hash_map_remove(HashMap *hash_map, char *key);
 void hash_map_free(HashMap *hash_map, void (*destructor)(void *));
 
+unsigned int hash_function(char *data);
+
 #endif

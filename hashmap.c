@@ -110,3 +110,14 @@ void hash_map_free(HashMap *hash_map, void (*destructor)(void *)) {
 
   free(hash_map->buckets.data);
 }
+
+// FNV-1A from https://softwareengineering.stackexchange.com/a/145633
+unsigned int hash_function(char *data) {
+  unsigned int hash = 2166136261;
+  for (int i = 0; data[i] != 0; i++) {
+    hash = hash ^ data[i];
+    hash = hash * 16777619;
+  }
+
+  return hash;
+}
