@@ -3,20 +3,20 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "deque.h"
+#include "dlist.h"
 
 char *string = "Hello world!";
-Deque *deque;
+DList *dlist;
 
 bool test_push() {
-  deque_push(deque, &string[0]);
-  char *value = deque_peek(deque);
+  dlist_push(dlist, &string[0]);
+  char *value = dlist_peek(dlist);
 
   return value != NULL;
 }
 
 bool test_pop() {
-  char *value = deque_pop(deque);
+  char *value = dlist_pop(dlist);
 
   return *value == 'H';
 }
@@ -24,11 +24,11 @@ bool test_pop() {
 bool test_pop_multiple() {
   size_t n = strlen(string);
   for (size_t i = 0; i < n; i++) {
-    deque_push(deque, &string[i]);
+    dlist_push(dlist, &string[i]);
   }
 
   for (size_t i = 0; i < n; i++) {
-    char *value = deque_pop(deque);
+    char *value = dlist_pop(dlist);
 
     if (*value != string[(n - 1) - i]) {
       return false;
@@ -39,7 +39,7 @@ bool test_pop_multiple() {
 }
 
 int main() {
-  deque = deque_new();
+  dlist = dlist_new();
   char *test_names[] = {
       "test_push",
       "test_pop",
@@ -65,5 +65,5 @@ int main() {
 
   printf("=== %u out of %u test(s) failed ===\n", failed, n);
 
-  deque_free(deque, NULL);
+  dlist_free(dlist, NULL);
 }

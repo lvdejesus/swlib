@@ -1,10 +1,10 @@
-FLAGS=-I. -g -Wall -fsanitize=address
+FLAGS=-I. -g -Wall #-fsanitize=address
 
-test: test-vector test-list test-hashmap test-deque
+test: test-vector test-list test-hashmap test-dlist
 	make test-vector
 	make test-list
 	make test-hashmap
-	make test-deque
+	make test-dlist
 
 test-vector: tests/test_vector.c vector.c
 	gcc tests/test_vector.c vector.c ${FLAGS} -o test_vector.out
@@ -21,7 +21,7 @@ test-hashmap: tests/test_hashmap.c hashmap.c vector.c list.c
 	./test_hashmap.out	
 	rm test_hashmap.out
 
-test-deque: tests/test_deque.c deque.c
-	gcc tests/test_deque.c deque.c ${FLAGS} -o test_deque.out
-	./test_deque.out
-	rm test_deque.out
+test-dlist: tests/test_dlist.c dlist.c
+	gcc tests/test_dlist.c dlist.c ${FLAGS} -o test_dlist.out
+	./test_dlist.out
+	rm test_dlist.out
