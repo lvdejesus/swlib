@@ -1,23 +1,24 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
 #include "hashmap.h"
 #include "list.h"
 #include "vector.h"
 
-HashMap *hash_map_new(size_t num_buckets,
-                      unsigned int (*hash_function)(char *)) {
+HashMap *hash_map_new(size_t num_buckets, unsigned int (*hash_function)(void *),
+                      int (*cmp)(void *, void *)) {
   HashMap *hash_map = malloc(sizeof(HashMap));
-  hash_map_init(hash_map, num_buckets, hash_function);
+  hash_map_init(hash_map, num_buckets, hash_function, cmp);
 
   return hash_map;
 }
 
 void hash_map_init(HashMap *hash_map, size_t num_buckets,
-                   unsigned int (*hash_function)(char *)) {
+                   unsigned int (*hash_function)(void *),
+                   int (*cmp)(void *, void *)) {
   hash_map->hash_function = hash_function;
   hash_map->num_buckets = num_buckets;
+  hash_map->cmp = cmp;
 
   vector_init(&hash_map->buckets, num_buckets, sizeof(List));
 
@@ -28,7 +29,7 @@ void hash_map_init(HashMap *hash_map, size_t num_buckets,
   hash_map->buckets.size = hash_map->buckets.capacity;
 }
 
-HashMapNode *hash_map_node_new(char *key, void *value) {
+HashMapNode *hash_map_node_new(void *key, void *value) {
   HashMapNode *node = malloc(sizeof(HashMapNode));
   node->key = key;
   node->value = value;
@@ -36,13 +37,13 @@ HashMapNode *hash_map_node_new(char *key, void *value) {
   return node;
 }
 
-void hash_map_add(HashMap *hash_map, char *key, void *value) {
+void hash_map_add(HashMap *hash_map, void *key, void *value) {
   size_t bucket = hash_map->hash_function(key) % hash_map->num_buckets;
   List *list = vector_get(&hash_map->buckets, bucket);
   list_push(list, hash_map_node_new(key, value));
 }
 
-void *hash_map_get(HashMap *hash_map, char *key) {
+void *hash_map_get(HashMap *hash_map, void *key) {
   size_t bucket = hash_map->hash_function(key) % hash_map->num_buckets;
   List *list = vector_get(&hash_map->buckets, bucket);
   ListNode *list_node = list->head;
@@ -55,7 +56,7 @@ void *hash_map_get(HashMap *hash_map, char *key) {
 
   do {
     HashMapNode *node = list_node->value;
-    if (strcmp(node->key, key) == 0) {
+    if (hash_map->cmp(node->key, key) == 0) {
       result = node->value;
       break;
     }
@@ -66,7 +67,7 @@ void *hash_map_get(HashMap *hash_map, char *key) {
   return result;
 }
 
-void hash_map_remove(HashMap *hash_map, char *key) {
+void hash_map_remove(HashMap *hash_map, void *key) {
   size_t bucket = hash_map->hash_function(key) % hash_map->num_buckets;
   List *list = vector_get(&hash_map->buckets, bucket);
   ListNode *list_node = list->head;
@@ -80,7 +81,7 @@ void hash_map_remove(HashMap *hash_map, char *key) {
 
   do {
     node = list_node->value;
-    if (strcmp(node->key, key) == 0) {
+    if (hash_map->cmp(node->key, key) == 0) {
       break;
     }
 
